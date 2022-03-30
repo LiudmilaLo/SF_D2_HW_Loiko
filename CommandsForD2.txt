@@ -1,0 +1,289 @@
+1
+
+1.	python manage.py shell
+2.	from news.models import *
+3.	u1 = User.objects.create_user(username='Lila')
+4.	u1
+<User: Lila>
+5.	u2 = User.objects.create_user(username='Belle')
+
+
+
+
+2
+
+1.	Author.objects.create(authorUser=u1)
+<Author: Author object (3)>
+2.	>>> Author.objects.create(authorUser=u2)
+<Author: Author object (4)>
+
+
+
+
+3
+
+1.	>>> Category.objects.create(name='Business')
+<Category: Category object (5)>
+2.	>>> Category.objects.create(name='Sport')
+<Category: Category object (6)>
+3.	>>> Category.objects.create(name='CyberSport')
+<Category: Category object (7)>
+4.	>>> Category.objects.create(name='IT and AI')
+<Category: Category object (8)>
+
+
+
+
+4
+
+1.	>>> lila = Author.objects.get(id=3)cts
+2.	>>> lila
+<Author: Author object (3)>
+3.	>>> Post.objects.create(author=lila, categoryType = 'NW', title='В World of Warcraft увековечат
+4.	 память собаки одного из игроков', text='Авторы WOW решили поддержать фаната игры после смерти его собаки Полли, которой было 19 лет. В память о питомце разработчики добавили на текстовый сервер животное-NPC, которое появится в обновлении 9.2.5')
+<Post: Post object (4)>
+5.	>>> Post.objects.get(id=4).title
+'В World of Warcraft увековечат память собаки одного из игроков'
+6.	>>> Post.objects.get(id=4).text
+'Авторы WOW решили поддержать фаната игры после смерти его собаки Полли, которой было 19 лет. В память о питомце разработчики добавили на текстовый сервер животное-NPC, которое появится в обновлении 9.2.5'
+7.	>>> Post.objects.get(id=4).author
+<Author: Author object (3)>
+8.	>>> belle = Author.objects.get(id=4)
+9.	>>> belle
+10.	<Author: Author object (4)>
+11.	Post.objects.create(author=belle, categoryType='AR', title='Оливки - идеальный продукт для спортсменов', text='Оливки и оливковое масло улучшают состояние жкт, т.к. имеют пониженную кислотность. И блаблабла очередная глупая статья')
+<Post: Post object (5)>
+12.	>>> Post.objects.create(author=belle, categoryType='AR', title='Блокировки интернет-ресурсов и ущерб экономике', text='Блокировки сайтов в 2022 году уже нанесли экономике РФ ущерба на полтора миллиарда долларов. Беда бедовая, однако. Блоггеры и продавцы ип-шники с сайта-который-нельзя-называть получили немало проблем со своим бизнесом. Меньшее количество продаж, соответственно, влечет снижение поступления в госбюджет налоговых выплат.')
+<Post: Post object (6)>
+
+
+
+
+5
+
+1.	>>> Post.objects.get(id=4).postCategory.add(Category.objects.get(id=7))
+2.	>>> Post.objects.get(id=5).postCategory.add(Category.objects.get(id=6))
+3.	>>> Post.objects.get(id=6).postCategory.add(Category.objects.get(id=5))
+4.	>>> Post.objects.get(id=6).postCategory.add(Category.objects.get(id=8))
+
+
+
+
+6
+
+1.	>>>Comment.objects.create(commentPost=Post.objects.get(id=4),commentUser=Author.objects.get(id=4).authorUser, text='Это кто тут самый хороший мальчик :)')
+<Comment: Comment object (5)>
+2.	>>>Comment.objects.create(commentPost=Post.objects.get(id=4),commentUser=Author.objects.get(id=3).authorUser, text='Надеюсь, ему понравится в варкрафте жить')
+<Comment: Comment object (6)>
+3.	>>>Comment.objects.create(commentPost=Post.objects.get(id=5),commentUser=Author.objects.get(id=3).authorUser, text='КГАМ')
+<Comment: Comment object (7)>
+4.	>>>Comment.objects.create(commentPost=Post.objects.get(id=6),commentUser=Author.objects.get(id=3).authorUser, text='Страшно, страшно, очень страшно. Мы не знаем, что это такое. Если бы мы знали, что это такое.. но мы не знаем, что это такое')
+<Comment: Comment object (8)>
+
+
+
+
+7
+
+1.	>>> Comment.objects.get(id=5).like()
+2.	>>> Comment.objects.get(id=5).rating
+1
+3.	>>> Comment.objects.get(id=5).like()
+4.	>>> Comment.objects.get(id=5).like()
+5.	>>> Comment.objects.get(id=5).like()
+6.	>>> Comment.objects.get(id=5).like()
+7.	>>> Comment.objects.get(id=5).dislike()
+8.	>>> Comment.objects.get(id=5).dislike()
+9.	>>> Comment.objects.get(id=5).like()
+10.	>>> Comment.objects.get(id=5).rating
+4
+11.	>>> Comment.objects.get(id=6).like()
+12.	>>> Comment.objects.get(id=6).like()
+13.	>>> Comment.objects.get(id=6).like()
+14.	>>> Comment.objects.get(id=6).like()
+15.	>>> Comment.objects.get(id=6).like()
+16.	>>> Comment.objects.get(id=6).like()
+17.	>>> Comment.objects.get(id=6).like()
+18.	>>> Comment.objects.get(id=6).like()
+19.	>>> Comment.objects.get(id=6).like()
+20.	 >>> Comment.objects.get(id=6).dislike()
+21.	>>> Comment.objects.get(id=6).dislike()
+22.	>>> Comment.objects.get(id=6).dislike()
+23.	>>> Comment.objects.get(id=6).like()
+24.	>>> Comment.objects.get(id=6).like()
+25.	>>> Comment.objects.get(id=6).like()
+26.	>>> Comment.objects.get(id=6).like()
+27.	>>> Comment.objects.get(id=6).rating
+28.	9
+29.	>>> Comment.objects.get(id=7).rating
+0
+30.	>>> Comment.objects.get(id=7).like()
+31.	>>> Comment.objects.get(id=7).rating
+1
+32.	>>> Comment.objects.get(id=7).like()
+33.	>>> Comment.objects.get(id=7).rating
+2
+34.	>>> Comment.objects.get(id=7).dislike()
+35.	>>> Comment.objects.get(id=7).rating
+1
+36.	>>> Comment.objects.get(id=7).like()
+37.	>>> Comment.objects.get(id=7).like()
+38.	>>> Comment.objects.get(id=7).like()
+39.	>>> Comment.objects.get(id=7).rating
+4
+40.	>>> Comment.objects.get(id=7).like()
+41.	>>> Comment.objects.get(id=7).like()
+42.	>>> Comment.objects.get(id=7).like()
+43.	>>> Comment.objects.get(id=7).dislike()
+44.	>>> Comment.objects.get(id=7).dislike()
+45.	>>> Comment.objects.get(id=7).rating
+5
+46.	>>> Comment.objects.get(id=8).like()
+47.	>>> Comment.objects.get(id=8).like()
+48.	>>> Comment.objects.get(id=8).like()
+49.	>>> Comment.objects.get(id=8).dislike()
+50.	>>> Comment.objects.get(id=8).like()
+51.	>>> Comment.objects.get(id=8).dislike()
+52.	>>> Comment.objects.get(id=8).dislike()
+53.	>>> Comment.objects.get(id=8).like()
+54.	>>> Comment.objects.get(id=8).rating
+2
+55.	>>> Post.objects.get(id=4).like()
+56.	>>> Post.objects.get(id=4).like()
+57.	>>> Post.objects.get(id=4).like()
+58.	>>> Post.objects.get(id=4).like()
+59.	>>> Post.objects.get(id=4).like()
+60.	>>> Post.objects.get(id=4).like()
+61.	>>> Post.objects.get(id=4).like()
+62.	>>> Post.objects.get(id=4).like()
+63.	>>> Post.objects.get(id=4).like()
+64.	>>> Post.objects.get(id=4).dislike()
+65.	>>> Post.objects.get(id=4).like()
+66.	>>> Post.objects.get(id=4).rating
+9
+67.	>>> Post.objects.get(id=4).like()
+68.	>>> Post.objects.get(id=4).like()
+69.	>>> Post.objects.get(id=4).like()
+70.	>>> Post.objects.get(id=4).like()
+71.	>>> Post.objects.get(id=4).like()
+72.	>>> Post.objects.get(id=4).like()
+73.	>>> Post.objects.get(id=4).like()
+74.	>>> Post.objects.get(id=4).dislike()
+75.	>>> Post.objects.get(id=4).like()
+76.	>>> Post.objects.get(id=4).rating
+16
+77.	>>> Post.objects.get(id=5).like()
+78.	>>> Post.objects.get(id=5).dislike()
+79.	>>> Post.objects.get(id=5).dislike()
+80.	>>> Post.objects.get(id=5).dislike()
+81.	>>> Post.objects.get(id=5).dislike()
+82.	>>> Post.objects.get(id=5).dislike()
+83.	>>> Post.objects.get(id=5).dislike()
+84.	>>> Post.objects.get(id=5).like()
+85.	>>> Post.objects.get(id=5).like()
+86.	>>> Post.objects.get(id=5).dislike()
+87.	>>> Post.objects.get(id=5).dislike()
+88.	>>> Post.objects.get(id=5).dislike()
+89.	>>> Post.objects.get(id=5).rating
+-6
+90.	>>> Post.objects.get(id=6).like()
+91.	>>> Post.objects.get(id=6).like()
+92.	>>> Post.objects.get(id=6).like()
+93.	>>> Post.objects.get(id=6).like()
+94.	>>> Post.objects.get(id=6).like()
+95.	>>> Post.objects.get(id=6).rating
+5
+
+
+
+8
+
+1.	>>> Author.objects.get(id=3)
+2.	<Author: Author object (3)>
+3.	>>> lilas = Author.objects.get(id=3)
+4.	>>> lilas.update_rating()
+5.	>>> lilas.ratingAuthor
+64
+6.	>>> Author.objects.get(id=4)
+7.	<Author: Author object (4)>
+8.	>>> belles = Author.objects.get(id=4)
+9.	>>> belles.update_rating()
+10.	>>> belles.ratingAuthor
+1
+
+
+
+9
+
+1.	lilas = Author.objects.order_by('-ratingAuthor')
+2.	>>> lilas
+<QuerySet [<Author: Author object (3)>, <Author: Author object (4)>]>
+3.	lilas = Author.objects.order_by('-ratingAuthor')[:1]
+4.	>>> lilas
+<QuerySet [<Author: Author object (3)>]>
+5.	>>> belles = Author.objects.order_by('-ratingAuthor')[:1]
+6.	>>> belles
+<QuerySet [<Author: Author object (3)>]>
+7.	lilas = Author.objects.order_by('-ratingAuthor')[:1]
+8.	>>> lilas
+<QuerySet [<Author: Author object (3)>]>
+9.	>>> for i in lilas:
+10.	...  i.ratingAuthor
+11.	...  i.authorUser.username
+...
+64
+'Lila'
+
+
+
+
+10
+
+1.	>>> firstpost = Post.objects.get(id=4)
+2.	>>> firstpost.rating
+16
+3.	>>> firstpost = Post.objects.order_by('-rating')
+4.	>>> firstpost
+<QuerySet [<Post: Post object (4)>, <Post: Post object (6)>, <Post: Post object (5)>]>
+5.	>>> firstpost = Post.objects.order_by('-rating')[:1]
+6.	>>> firstpost
+<QuerySet [<Post: Post object (4)>]>
+7.	>>> for g in firstpost:
+8.	...  g.dateCreation
+9.	...  g.author.authorUser.username
+10.	...  g.rating
+11.	...  g.title
+12.	...  g.text
+13.	...
+datetime.datetime(2022, 3, 29, 20, 4, 47, 262017, tzinfo=datetime.timezone.utc)
+'Lila'
+16
+'В World of Warcraft увековечат память собаки одного из игроков'
+'Авторы WOW решили поддержать фаната игры после смерти его собаки Полли, которой было 19 лет. В память о питомце разработчики добавили на текстовый сервер животное-NPC, которое появится в обновлении 9.2.5'
+
+
+
+
+11
+
+1.	>>> bestpost = Post.objects.all().order_by('-rating')[:1]
+2.	>>> bestpost
+<QuerySet [<Post: Post object (4)>]>
+3.	>>> ccc = Comment.objects.filter(commentPost=bestpost).all()
+4.	>>> ccc
+<QuerySet [<Comment: Comment object (5)>, <Comment: Comment object (6)>]>
+5.	for k in ccc:
+6.	...  k.dateCreation
+7.	...  k.commentUser.username
+8.	...  k.rating
+9.	...  k.text
+10.	...
+datetime.datetime(2022, 3, 29, 21, 18, 14, 366297, tzinfo=datetime.timezone.utc)
+'Belle'
+4
+'Это кто тут самый хороший мальчик :)'
+datetime.datetime(2022, 3, 29, 21, 20, 40, 491820, tzinfo=datetime.timezone.utc)
+'Lila'
+9
+'Надеюсь, ему понравится в варкрафте жить'
+>>>
